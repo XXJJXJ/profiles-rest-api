@@ -25,3 +25,23 @@
 * On the virtual environment, do: `python manage.py runserver 0.0.0.0:8000`
 * Then on our browser, type in `127.0.0.1:8000` to see the django web framework
   * Note `127.0.0.1` represents `localhost` and `8000` is the port number.
+
+
+### Create our user database model & add user model manager
+
+* Refer to `models.py` under `profiles_api` directory
+
+### Set our custom user model
+
+* Under `/profiles_project/settings.py` scroll to the bottom and add a line `AUTH_USER_MODEL = 'profiles_api.UserProfile'`
+
+### Create migrations and sync DB
+
+* cd to project directory `profile-rest-api`
+  * On terminal do: `vagrant up` (if virtual machine not on)
+  * Then `vagrant ssh` (if not connected to virtual environment)
+  * On the virtual environment cd to `/vagrant/`
+  * Do: `source ~/env/bin/activate` to switch to python venv
+  * Do: `python manage.py makemigrations profiles_api`, "profiles_api" is the name of the app
+    * With this, "UserProfile" written in the previous step is created
+  * To run our migration, do: `python manage.py migrate`
