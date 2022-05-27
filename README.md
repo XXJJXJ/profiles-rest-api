@@ -45,3 +45,29 @@
   * Do: `python manage.py makemigrations profiles_api`, "profiles_api" is the name of the app
     * With this, "UserProfile" written in the previous step is created
   * To run our migration, do: `python manage.py migrate`
+
+### Create Superuser
+* cd to project directory `profile-rest-api`
+  * On terminal do: `vagrant up` (if virtual machine not on)
+  * Then `vagrant ssh` (if not connected to virtual environment)
+  * On the virtual environment cd to `/vagrant/`
+  * Do: `source ~/env/bin/activate` to switch to python venv
+  * Do: `python manage.py createsuperuser` and it will prompt us to key in our:
+    * Email address (use your own)
+    * Name
+    * Password (twice, need to be strong)(!!!)
+    * (If weak password is used, confirmation is required, y/N)
+
+#### Enable Django admin
+* On `/profiles_api/admin.py` import `models` ...
+* Changes are made on the file...
+
+#### Test Django admin
+* On the virtual environment (through `source ~/env/bin/activate`)
+* Run `python manage.py runserver 0.0.0.0:8000`
+* Then go to your browser to visit `127.0.0.1:8000/admin` or `localhost:8000/admin`
+* Log in to the superuser account created using your own credentials
+  * On the page, we see apps in our Django project
+  * Under `PROFILES_API`, the `User profiles` is named after our `UserProfile` model
+  * Click `User profiles` and we see all the user profiles created
+  * Click on the email to see the details (note: Password is hashed)
