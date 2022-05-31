@@ -71,3 +71,13 @@
   * Under `PROFILES_API`, the `User profiles` is named after our `UserProfile` model
   * Click `User profiles` and we see all the user profiles created
   * Click on the email to see the details (note: Password is hashed)
+
+### Create APIViews
+* Under `/profiles_api/` directory, open `views.py`
+* Make the edits as shown in the new `views.py` file
+
+#### Configure view URL
+* Under `/profiles_project/` directory, open `urls.py`
+  * In `/profiles_project/urls.py` add an import for `include` and add the line `path('api/', include('profiles_api.urls'))` in `urlpatterns` variable
+* Create another `urls.py` file under `/profiles_api/` directory
+  * Make the change as per reflected in this file
