@@ -90,3 +90,18 @@
 #### Create a Serializer
 * Under `/profiles_api` directory, create a file `serializers.py`
   * Edit it as per the file
+
+### Create ViewSet
+* Under `/profiles_api/` directory, open `views.py`
+* Make the edits as shown in the new `views.py` file (a new class `HelloViewSet` under `HelloApiView` section)
+  * `list` method
+  * `create` method
+  * `retrieve` method
+  * 
+
+#### Add URL Router
+* Changes made in `urls.py` under `/profiles_api/`
+
+#### Testing ViewSet
+* For the main screen at `http://localhost:8000/api/hello-viewset/`, we do not see methods from `retrieve` onwards (only have list and create)
+* `http://localhost:8000/api/hello-viewset/1/` allow us to see the other methods.
