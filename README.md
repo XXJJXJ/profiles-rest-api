@@ -129,3 +129,7 @@
   * Import `TokenAuthentication` from rest_framework.authentication
   * Import `permissions` from profiles_api
   * Update `UserProfileViewSet` class
+
+### Add Search profile feature
+* Import `filters` from rest_framework in `views.py`
+* Edit `UserProfileViewSet` class
