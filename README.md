@@ -97,7 +97,7 @@
   * `list` method
   * `create` method
   * `retrieve` method
-  * 
+  * ...
 
 #### Add URL Router
 * Changes made in `urls.py` under `/profiles_api/`
@@ -105,3 +105,27 @@
 #### Testing ViewSet
 * For the main screen at `http://localhost:8000/api/hello-viewset/`, we do not see methods from `retrieve` onwards (only have list and create)
 * `http://localhost:8000/api/hello-viewset/1/` allow us to see the other methods.
+
+### Create Profile API
+* Define `UserProfileSerializer` in `/profiles_api/serializer.py`
+* In `/profiles_api/views.py` define `UserProfileViewSet`
+
+#### Register profile Viewset with the URL router
+* In `/profiles_api/urls.py`, register profile ViewSet using the `router`
+
+#### Test creating a profile
+* Run the server as per above (using vagrant)
+* On browser, go to `http://localhost:8000/api/profile/` and play around
+
+#### Create permission class
+* This is to avoid any users to modify other users
+* Done using Django permission class
+* Create a new file `permissions.py` under `/profiles_api/`
+  * Define a class `UpdateOwnProfile`
+    * Define a method `has_object_permission()`
+
+#### Add authentication and permissions to ViewSet
+* Changes in `/profiles_api/views.py`
+  * Import `TokenAuthentication` from rest_framework.authentication
+  * Import `permissions` from profiles_api
+  * Update `UserProfileViewSet` class

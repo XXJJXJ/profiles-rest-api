@@ -8,6 +8,8 @@ from profiles_api import views
 # for ViewSet
 router = DefaultRouter()
 router.register('hello-viewset', views.HelloViewSet, base_name='hello-viewset')
+# Register profile viewset
+router.register('profile', views.UserProfileViewSet)
 
 ## This will be for "webserver_url/api/..."
 ## the "api/" will bring us here
