@@ -16,6 +16,7 @@ router.register('profile', views.UserProfileViewSet)
 ## here we can continue to redirect into more directories
 urlpatterns = [
     path("hello-view/", views.HelloApiView.as_view()),
+    path('login/', views.UserLoginApiView.as_view()),
     path('', include(router.urls)), # for ViewSet
 ]
 ## needs localhost:8000/api/hello-view/ to work, localhost:8000/api/ does not work anymore

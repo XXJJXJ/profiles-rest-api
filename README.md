@@ -133,3 +133,20 @@
 ### Add Search profile feature
 * Import `filters` from rest_framework in `views.py`
 * Edit `UserProfileViewSet` class
+
+### Create Login API
+
+* In `/profiles_api/views.py`:
+  * Import `ObtainAuthToken` from rest_framework.authtoken.views
+  * Import `api_settings` from rest_framework.settings
+  * Define `UserLoginApiView` class
+* In `/profiles_api/urls.py`:
+  * Add a new path `path('login/', views.UserLoginApiView.as_view()),` in `urlpatterns`
+
+#### Set token header using ModHeader Chrome extension (only for testing purposes)
+1. "Login" using the Login API to obtain an authtoken
+2. Open ModHeader and on the "Request Header" indicate "Authorization"
+3. Type "Token " and paste the authtoken in the value field
+
+With this, we can go to the profile i.e. `http://localhost:8000/api/profile/*` where `*` is the id of your authenticated profile.
+We can now modify our own profile (previously blocked by the permissions tab) since we are authenticated.
