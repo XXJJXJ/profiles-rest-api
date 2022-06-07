@@ -10,6 +10,7 @@ router = DefaultRouter()
 router.register('hello-viewset', views.HelloViewSet, base_name='hello-viewset')
 # Register profile viewset
 router.register('profile', views.UserProfileViewSet)
+router.register('feed', views.UserProfileFeedViewSet)
 
 ## This will be for "webserver_url/api/..."
 ## the "api/" will bring us here

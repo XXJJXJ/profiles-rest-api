@@ -150,3 +150,52 @@
 
 With this, we can go to the profile i.e. `http://localhost:8000/api/profile/*` where `*` is the id of your authenticated profile.
 We can now modify our own profile (previously blocked by the permissions tab) since we are authenticated.
+
+### Create profile feed API
+
+#### Create new Django model for storing user profile feed items
+* Under `/profiles_api/models.py`:
+  * Import `settings` from django.conf
+  * Define a `ProfileFeedItem` class
+
+#### Create and run model migration
+* Connect to vagrant:
+  * On terminal do:
+    * `vagrant up` to start up virtual machine
+    * `vagrant ssh` to connect to virtual machine
+    * `cd /vagrant` to change directory to shared directory
+    * `source ~/env/bin/activate` to activate virtual environment
+* Then run `python manage.py makemigrations`
+* Then the `ProfileFeedItem` model is created
+  * Can be verified by looking under `/profiles_api/migrations` directory
+
+#### Add profile feed model to admin
+* Under `/profiles_api/admin.py`:
+  * Add a line: `admin.site.register(models.ProfileFeedItem)`
+
+#### Create profile feed item serializer
+* Under `/profiles_api/serializers.py`:
+  * Define a `ProfileFeedItemSerializer` class
+
+#### Create ViewSet for profile feed item
+* Under `/profiles_api/views.py`:
+  * Define a `UserProfileFeedViewSet` class
+* Under `/profiles_api/urls.py`:
+  * Add a line: `router.register('feed', views.UserProfileFeedViewSet)`
+
+#### Add permissions for feed API
+* Under `/profiles_api/permissions.py`:
+  * Define a `UpdateOwnStatus` class
+* Under `/profiles_api/views.py`:
+  * Import `IsAuthenticatedOrReadOnly` from rest_framework.permissions 
+  * Edit `UserProfileFeedViewSet` class:
+    * Add: ```permission_classes = (
+        permissions.UpdateOwnStatus,
+        IsAuthenticatedOrReadOnly
+    )```
+
+#### Restrict viewing status to authenticated users only
+* Under `/profiles_api/views.py`:
+  * Change import `IsAuthenticatedOrReadOnly` from rest_framework.permissions
+  * To import `IsAuthenticated` from rest_framework.permissions
+  * And adjust the `permissions_classes` in `UserProfileFeedViewSet` class accordingly
