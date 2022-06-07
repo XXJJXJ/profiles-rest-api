@@ -238,3 +238,23 @@ We can now modify our own profile (previously blocked by the permissions tab) si
 
 * **Note**: Before we actually deploy, the scripts need to have the permission to be executed:
   * On our working directory (terminal), do: `chmod +x deploy_v2/*.sh` to add executable rights to .sh files under `/deploy_v2/` directory
+
+#### Deploy to server
+* Go to AWS console > Services > Compute > EC2
+  * Select `Running instances`
+  * Hover over `Public DNS (IPv4)` and copy to clipboard
+  * On our local terminal, use ssh:
+    * `ssh ubuntu@<Paste whatever that was copied>` and press enter and "Yes" to connect to the server
+  * On our GitHub page, navigate to the `/deploy_v2/` directory and click on `setup.sh`
+    * Select "Raw" mode and **copy the url** on the browser
+  * On our local terminal:
+    * `curl -sL <Paste the copied link> | sudo bash -` used to retrieve contents from an url
+
+* Once done, copy the `Public DNS (IPv4)` link again
+* Go to `/profiles_project/settings.py` find `ALLOWED_HOSTS` list and add the copied link as a string
+* Also add `'127.0.0.1'` to allow us to connect on localhost (?)
+* Push all changes to GitHub and on the server, run the `update.sh` by:
+  * Connect to server first (ssh ... command)
+  * Change directory to the project directory: `cd /usr/local/apps/profiles-rest-api/`
+  * Do: `sudo sh ./deploy_v2/update.sh`
+* Now we can access the site by inputting `<Link copied from Public DNS (IPv4)>/api/` as the url
