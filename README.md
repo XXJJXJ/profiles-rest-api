@@ -199,3 +199,42 @@ We can now modify our own profile (previously blocked by the permissions tab) si
   * Change import `IsAuthenticatedOrReadOnly` from rest_framework.permissions
   * To import `IsAuthenticated` from rest_framework.permissions
   * And adjust the `permissions_classes` in `UserProfileFeedViewSet` class accordingly
+
+### Deploy app to AWS (Free tier)
+* Note, these are the steps in the tutorial, some steps might not be necessary
+
+#### Add key pair
+* After signing in to the AWS console:
+  * Click on `services` and then `Compute`
+  * On the left bar, scroll down to `Network & Security` section
+  * Click on `Key Pairs`
+  * Click on `Actions` and then `Import key pair`
+    * The key should be called `id_rsa.pub` in the home directory
+    * Search up google on how to generate an rsa key-pair if it does not exist
+  * On the directory with `id_rsa.pub`, do: `cat id_rsa.pub` and copy the key
+  * Paste it on the AWS console at the "Import Key pair" page
+
+#### Create an EC2 server instance
+* On the AWS console, navigate to the EC2 Dashboard
+* Click on `Launch Instance`
+* Select `Ubuntu` and AMI to be `Ubuntu Server 18.04 LTS`
+* Scroll down to the "Security Group" portion
+  * Add a new rule to allow HTTP connection
+* Launch instance
+
+#### Add deployment scripts and config to project
+* Created a `/deploy_v2/` directory containing:
+  * `setup.sh`: Used for when we first set up our Server
+    * Change the `PROJECT_GIT_URL` to our actual git clone url
+    * The `PROJECT_BASE_PATH` is the location where we are going to store our project on the server
+    * The subsequent lines are commandline commands to be executed on server
+  * `update.sh`: Used to update the code on the server when we make changes
+  * The other 2 files are config files
+
+* Go to `/profiles_projects/settings.py` change `DEBUG` to False, or alternatively
+* change the line to `DEBUG = bool(int(os.environ.get('DEBUG', 1)))`, which leaves it as 1 if not found (i.e. at development phase)
+* Notice in the `/deploy_v2/supervisor_profiles_api.conf`, DEBUG is set to 0
+* At the end of `settings.py` add line: `STATIC_ROOT = 'static/'` which is the location where django saves the static files
+
+* **Note**: Before we actually deploy, the scripts need to have the permission to be executed:
+  * On our working directory (terminal), do: `chmod +x deploy_v2/*.sh` to add executable rights to .sh files under `/deploy_v2/` directory
